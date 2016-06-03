@@ -1,6 +1,7 @@
 FROM mxhash/debian-base:jessie-backports
 
-ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -10,5 +11,12 @@ RUN apt-get update \
 
 ADD supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
-ENTRYPOINT ["/usr/bin/supervisord"]
-CMD ["-c", "/etc/supervisor/supervisord.conf", "-n"]
+COPY docker-entrypoint.sh /usr/local/bin
+
+ENV SUPERVISOR          "supervisord"
+ENV SUPERVISOR_CONFIG   "/etc/supervisor/supervisord.conf"
+ENV SUPERVISOR_SLEEP    "10"
+ENV SUPERVISOR_ARGS     ""
+
+CMD docker-entrypoint.sh
+
