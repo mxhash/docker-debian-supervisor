@@ -1,4 +1,4 @@
-FROM mxhash/debian-base:jessie-backports
+FROM registry.itsocks.de/library/debian-base:jessie-backports
 
 ARG DEBIAN_FRONTEND
 ENV DEBIAN_FRONTEND=noninteractive
