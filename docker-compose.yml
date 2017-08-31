@@ -1,0 +1,5 @@
+version: "3"
+services:
+  debian-supervisor:
+    build: ./
+    image: registry.itsocks.de/library/debian-base:latest
