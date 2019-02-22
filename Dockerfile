@@ -1,17 +1,13 @@
-FROM registry.itsocks.de/library/debian-base:stretch
+FROM gcr.io/itsocks/library/debian
 
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        supervisor \
+    && apt-get install -y --no-install-recommends \
+       bash \
+       gettext-base \
+       supervisor \
     && rm -rf /var/lib/apt/lists/*
 
-ADD supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisord.conf.template /etc/supervisor/supervisord.conf.template
+COPY run.sh /run.sh
 
-ADD entrypoint.sh /entrypoint.sh
-
-ENV SUPERVISOR supervisord
-ENV SUPERVISOR_CONFIG /etc/supervisor/supervisord.conf
-ENV SUPERVISOR_SLEEP 10
-ENV SUPERVISOR_ARGS=""
-
-CMD ["/entrypoint.sh"]
+CMD /bin/bash /run.sh
