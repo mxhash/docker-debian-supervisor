@@ -1,0 +1,6 @@
+# Exclude all
+*
+.*
+!run.sh
+!supervisord.conf.template
+
